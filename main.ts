@@ -126,7 +126,7 @@ namespace LumexEzRing {
     }
 
     //% blockId="setSerial" block="set EzRing RX to %pinRX|TX to %pinTX|BaudRate %br|pixel number of ring: %pixels"
-    //% weight=100 blockGap=2 blockInlineInputs=true pixels.min=1 pixels.max=120
+    //% weight=100 blockGap=5 blockInlineInputs=true pixels.min=1 pixels.max=120
     export function setSerial(pinRX: SerialPin, pinTX: SerialPin, br: BaudRate, pixels: number): void {
         basic.pause(300)
         serial.redirect(
@@ -136,14 +136,14 @@ namespace LumexEzRing {
         )
         serial.readUntil("E")
         basic.pause(100)
+        setPixelNumber(pixels)
         setDynaFunction(0)
         setDimmingLevel(31)
-        setPixelNumber(pixels)
         clear()
     }
 
     //% blockId="clear" block="clear display"
-    //% weight=95 blockGap=2
+    //% weight=95 blockGap=10
     export function clear(): void {
         stopFunction()
         serial.writeString("ATd0=()")
@@ -175,7 +175,7 @@ namespace LumexEzRing {
     }
 
     //% blockId="getColorHex" block="get the color code %hex"
-    //% weight=80 blockGap=5 blockExternalInputs=true
+    //% weight=80 blockGap=10 blockExternalInputs=true
     export function getColorHex(hex: colorCode): number[] {
         return getColorHexStr(convertNumToHexStr(hex,6))
     }
@@ -183,7 +183,6 @@ namespace LumexEzRing {
     //% blockId="setPixelColor" block="set the single pixel %addr|with color code %color"
     //% weight=75 blockGap=5 blockInlineInputs=true addr.min=0 addr.max=119
     export function setPixelColor(addr: number, color: number[]): void {
-        stopFunction()
         serial.writeString("ATc0=(" + addr + "," + color[0] + "," + color[1] + "," + color[2] + ")")
         serial.readUntil("E")
         basic.pause(3)
@@ -192,16 +191,14 @@ namespace LumexEzRing {
     //% blockId="setSectionColor" block="set the color code %color| from the pixel %addr0| to the pixel %addr1"
     //% weight=70 blockGap=5 blockInlineInputs=true addr0.min=0 addr0.max=119 addr1.min=0 addr1.max=119
     export function setSectionColor(color: number[], addr0: number, addr1: number): void {
-        stopFunction()
         serial.writeString("ATc1=(" + addr0 + "," + addr1 + "," + color[0] + "," + color[1] + "," + color[2] + ")")
         serial.readUntil("E")
         basic.pause(3)
     }
 
     //% blockId="setRandomColor" block="set the color randomly for each pixel"
-    //% weight=65 blockGap=5 blockInlineInputs=true pixels.min=1 pixels.max=120
+    //% weight=65 blockGap=10 blockInlineInputs=true pixels.min=1 pixels.max=120
     export function setRandomColor(): void {
-        stopFunction()
         serial.writeString("ATc2=()")
         serial.readUntil("E")
         basic.pause(3)
@@ -210,7 +207,6 @@ namespace LumexEzRing {
     //% blockId="playAnimation" block="display effect %effect|color code %color|speed(1~30) %speed"
     //% weight=60 blockGap=5 blockInlineInputs=true speed.min=1 speed.max=30
     export function playAnimation(effect: effectType, color: number[], speed: number): void {
-        stopFunction()
         serial.writeString("AT" + effect + "=(" + color[0] + "," + color[1] + "," + color[2] + "," + speed + ")")
         serial.readUntil("E")
         basic.pause(3)
@@ -220,7 +216,6 @@ namespace LumexEzRing {
     //% blockId="setClockMove" block="%myClockMove|speed(1~30) %speed"
     //% weight=55 blockGap=5 blockInlineInputs=true speed.min=1 speed.max=30
     export function setClockMove(myClockMove: clockMove, speed: number): void {
-        stopFunction()
         serial.writeString("AT" + convertNumToHexStr(myClockMove, 2) + "=(" + speed + ")")
         serial.readUntil("E")
         basic.pause(3)
@@ -229,7 +224,6 @@ namespace LumexEzRing {
     //% blockId="setPixelFlash" block="flash one single pixel %addr|speed(1~100) %speed"
     //% weight=50 blockGap=5 blockInlineInputs=true addr.min=0 addr.max=119 speed.min=1 speed.max=100
     export function setPixelFlash(addr: number, speed: number): void {
-        stopFunction()
         serial.writeString("ATc7=(" + addr + "," + speed + ")")
         serial.readUntil("E")
         basic.pause(3)
@@ -238,7 +232,6 @@ namespace LumexEzRing {
     //% blockId="setSectionFlash" block="flash the section pixels from the pixel %addr0| to the pixel %addr1|speed(1~100) %speed"
     //% weight=45 blockGap=5 blockInlineInputs=true addr0.min=0 addr0.max=119 addr1.min=0 addr1.max=119 speed.min=1 speed.max=100
     export function setSectionFlash(addr0: number, addr1: number, speed: number): void {
-        stopFunction()
         serial.writeString("ATc8=(" + addr0 + "," + addr1 + "," + speed + ")")
         serial.readUntil("E")
         basic.pause(3)
@@ -247,16 +240,14 @@ namespace LumexEzRing {
     //% blockId="setRingFlash" block="flash whole ring, speed(1~100) %speed"
     //% weight=40 blockGap=5 blockInlineInputs=true speed.min=1 speed.max=100
     export function setRingFlash(speed: number): void {
-        stopFunction()
         serial.writeString("ATc9=(" + speed + ")")
         serial.readUntil("E")
         basic.pause(3)
     }
 
     //% blockId="setBreath" block="breath effect of whole ring red %red|green %green|blue %blue"
-    //% weight=35 blockGap=5 blockInlineInputs=true
+    //% weight=35 blockGap=10 blockInlineInputs=true
     export function setBreath(red: yesOrNo, green: yesOrNo, blue: yesOrNo): void {
-        stopFunction()
         serial.writeString("ATca=(" + red + "," + green + "," + blue + ")")
         serial.readUntil("E")
         basic.pause(3)
