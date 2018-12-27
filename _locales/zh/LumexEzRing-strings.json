@@ -38,7 +38,7 @@
     "LumexEzRing.setSectionColor|block":"設定顏色編碼 %color|從第 %addr0|顆燈到第 %addr1|顆燈",
     "LumexEzRing.setClockMove|block":"%myClockMove|速度(1~30) %speed",
     "LumexEzRing.setPixelFlash|block":"閃爍第 %addr|顆燈光，速度(1~100) %speed",
-    "LumexEzRing.setSectionFlash|block":"閃爍燈光，從 %addr0|到第 %addr1|顆，速度(1~100) %speed",
+    "LumexEzRing.setSectionFlash|block":"閃爍燈光，從第 %addr0|顆到第 %addr1|顆，速度(1~100) %speed",
     "LumexEzRing.setRingFlash|block":"閃爍整個燈環，速度(1~100) %speed",
     "LumexEzRing.setBreath|block":"執行呼吸燈特效，由以下顏色混色，紅色 %red|綠色 %green|藍色 %blue",
     "LumexEzRing.setDynaFunction|block":"執行重覆特效，特效編號(1~20) %fCode",
