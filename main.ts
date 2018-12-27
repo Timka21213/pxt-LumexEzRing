@@ -119,7 +119,6 @@ namespace LumexEzRing {
     }
 
     function setPixelNumber(pixels: number): void {
-        stopFunction()
         serial.writeString("ATcf=(" + pixels + ")")
         serial.readUntil("E")
         basic.pause(10)
@@ -135,11 +134,11 @@ namespace LumexEzRing {
             br
         )
         serial.readUntil("E")
-        basic.pause(100)
-        setPixelNumber(pixels)
+        basic.pause(20)
         setDynaFunction(0)
-        setDimmingLevel(31)
+        setPixelNumber(pixels)
         clear()
+        setDimmingLevel(31)
     }
 
     //% blockId="clear" block="clear display"
