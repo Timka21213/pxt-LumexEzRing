@@ -92,6 +92,14 @@ namespace LumexEzRing {
         return myNum
     }
 
+    function convertNumToArray(myColor: number): number[] {
+        let temp0 = myColor >> 16
+        let temp1 = Math.idiv(myColor % 65536, 256)
+        let temp2 = myColor % 256
+        let myArray: number[] = [temp0, temp1, temp2]
+        return myArray;
+    }
+
     function convertNumToHexStr(myNum: number, digits: number): string {
         let tempDiv = 0
         let tempMod = 0
@@ -152,45 +160,44 @@ namespace LumexEzRing {
 
     //% blockId="getColor" block="get the color code| red(0~255) %red|green(0~255) %green|blue(0~255) %blue"
     //% weight=90 blockGap=5 blockExternalInputs=true red.min=0 red.max=255 green.min=0 green.max=255 blue.min=0 blue max=255
-    export function getColor(red: number, green: number, blue: number): number[] {
-        let myColor: number[] = [red, green, blue]
+    export function getColor(red: number, green: number, blue: number): number {
+        let myColor = (red << 16) + (green << 8) + blue
         return myColor
     }
 
     //% blockId="getColorHexStr" block="get the color code from hex string %hexStr"
     //% weight=85 blockGap=5 blockExternalInputs=true
-    export function getColorHexStr(hexStr: string): number[] {
-        let myColor: number[] = [0,0,0]
+    export function getColorHexStr(hexStr: string): number {
         if (hexStr.length > 6) {
             hexStr = hexStr.substr(hexStr.length - 6, 6)
         }
-        else if(hexStr.length < 6) {
-            hexStr="000000"
+        else if (hexStr.length < 6) {
+            hexStr = "000000"
         }
-        myColor[0] = convertHexStrToNum(hexStr.substr(0, 2))
-        myColor[1] = convertHexStrToNum(hexStr.substr(2, 2))
-        myColor[2] = convertHexStrToNum(hexStr.substr(4, 2))
+        let myColor = convertHexStrToNum(hexStr)
         return myColor
     }
 
     //% blockId="getColorHex" block="get the color code %hex"
     //% weight=80 blockGap=10 blockExternalInputs=true
-    export function getColorHex(hex: colorCode): number[] {
-        return getColorHexStr(convertNumToHexStr(hex,6))
+    export function getColorHex(hex: colorCode): number {
+        return hex
     }
 
     //% blockId="setPixelColor" block="set the single pixel %addr|with color code %color"
     //% weight=75 blockGap=5 blockInlineInputs=true addr.min=0 addr.max=119
-    export function setPixelColor(addr: number, color: number[]): void {
-        serial.writeString("ATc0=(" + addr + "," + color[0] + "," + color[1] + "," + color[2] + ")")
+    export function setPixelColor(addr: number, color: number): void {
+        let myColor = convertNumToArray(color)
+        serial.writeString("ATc0=(" + addr + "," + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
         serial.readUntil("E")
         basic.pause(3)
     }
 
     //% blockId="setSectionColor" block="set the color code %color| from the pixel %addr0| to the pixel %addr1"
     //% weight=70 blockGap=5 blockInlineInputs=true addr0.min=0 addr0.max=119 addr1.min=0 addr1.max=119
-    export function setSectionColor(color: number[], addr0: number, addr1: number): void {
-        serial.writeString("ATc1=(" + addr0 + "," + addr1 + "," + color[0] + "," + color[1] + "," + color[2] + ")")
+    export function setSectionColor(color: number, addr0: number, addr1: number): void {
+        let myColor = convertNumToArray(color)
+        serial.writeString("ATc1=(" + addr0 + "," + addr1 + "," + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
         serial.readUntil("E")
         basic.pause(3)
     }
@@ -205,8 +212,9 @@ namespace LumexEzRing {
 
     //% blockId="playAnimation" block="display effect %effect|color code %color|speed(1~30) %speed"
     //% weight=60 blockGap=5 blockInlineInputs=true speed.min=1 speed.max=30
-    export function playAnimation(effect: effectType, color: number[], speed: number): void {
-        serial.writeString("AT" + effect + "=(" + color[0] + "," + color[1] + "," + color[2] + "," + speed + ")")
+    export function playAnimation(effect: effectType, color: number, speed: number): void {
+        let myColor = convertNumToArray(color)
+        serial.writeString("AT" + effect + "=(" + myColor[0] + "," + myColor[1] + "," + myColor[2] + "," + speed + ")")
         serial.readUntil("E")
         basic.pause(3)
     }
@@ -282,9 +290,10 @@ namespace LumexEzRing {
 
     //% blockId="setDynaColor" block="set the dynamic function's color code %color"
     //% weight=15 blockGap=5 blockInlineInputs=true
-    export function setDynaColor(color: number[]): void {
-        serial.writeString("ATcd=(" + color[0] + "," + color[1] + "," + color[2] + ")")
+    export function setDynaColor(color: number): void {
+        let myColor = convertNumToArray(color)
+        serial.writeString("ATcd=(" + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
         serial.readUntil("E")
         basic.pause(3)
     }
-}   
+}    
