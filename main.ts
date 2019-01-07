@@ -183,8 +183,8 @@ namespace LumexEzRing {
     export function setPixelColor(addr: number, color: number): void {
         let myColor = convertNumToArray(color)
         serial.writeString("ATc0=(" + addr + "," + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
-        serial.readUntil("E")
-        basic.pause(3)
+        //serial.readUntil("E")
+        basic.pause(5)
     }
 
     //% blockId="setSectionColor" block="set the color code %color| from the pixel %addr0| to the pixel %addr1"
