@@ -146,7 +146,6 @@ namespace LumexEzRing {
     //% blockId="clear" block="clear display"
     //% weight=95 blockGap=10
     export function clear(): void {
-        setStopDyna()
         serial.writeString("ATd0=()")
         serial.readUntil("E")
         basic.pause(3)
