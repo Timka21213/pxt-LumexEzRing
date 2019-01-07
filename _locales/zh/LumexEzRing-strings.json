@@ -30,6 +30,8 @@
     "LumexEzRing.setSerial|block":"設定燈環的RX連接到 %pinRX|TX連接到 %pinTX|連線速率 %br|燈環燈數 %pixels", 
     "LumexEzRing.clear|block":"清除所有燈光",
     "LumexEzRing.setRandomColor|block":"所有燈光顯示隨機顏色",
+    "LumexEzRing.loadPage|block":"顯示預存之畫面(0~7) 第|%page|頁",
+    "LumexEzRing.writeToPage|block":"將顯示之畫面存進目前頁面",
     "LumexEzRing.getColor|block":"取得顏色編碼|紅色(0~255) %red|綠色(0~255) %green|藍色(0~255) %blue",
     "LumexEzRing.getColorHexStr|block":"由十六進位值取得顏色編碼 %hexStr",
     "LumexEzRing.getColorHex|block":"取得顏色編碼 %hex",
