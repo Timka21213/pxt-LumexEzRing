@@ -4,7 +4,7 @@
 
 //% weight=0 color=#ff9933 icon="\uf1cd" block="LumexEzRing"
 namespace LumexEzRing {
-    let functionCode = 0
+    //let functionCode = 0
     export enum yesOrNo {
         //% block="yes"
         type1 = 1,
@@ -67,12 +67,6 @@ namespace LumexEzRing {
         lime = 0xbfff00,
         //% block="black"
         black = 0x000000
-    }
-
-    function stopFunction(): void {
-        if (functionCode > 0) {
-            setDynaFunction(0)
-        }
     }
 
     function convertHexStrToNum(myMsg: string): number {
@@ -143,7 +137,7 @@ namespace LumexEzRing {
         )
         serial.readUntil("E")
         basic.pause(20)
-        setDynaFunction(0)
+        setStopDyna()
         setPixelNumber(pixels)
         clear()
         setDimmingLevel(31)
@@ -152,7 +146,7 @@ namespace LumexEzRing {
     //% blockId="clear" block="clear display"
     //% weight=95 blockGap=10
     export function clear(): void {
-        stopFunction()
+        setStopDyna()
         serial.writeString("ATd0=()")
         serial.readUntil("E")
         basic.pause(3)
@@ -210,6 +204,22 @@ namespace LumexEzRing {
         basic.pause(3)
     }
 
+    //% blockId="loadPage" block="switch display designated page(0~7): %page"
+    //% weight=64 blockGap=5 blockInlineInputs=true page.min=0 page.max=7
+    export function loadPage(page:number): void {
+        serial.writeString("ATfc=("+page+")")
+        serial.readUntil("E")
+        basic.pause(3)
+    }
+
+    //% blockId="writeToPage" block="save display contents to current page"
+    //% weight=63 blockGap=10 blockInlineInputs=true page.min=0 page.max=7
+    export function writeToPage(): void {
+        serial.writeString("ATfe=()")
+        serial.readUntil("E")
+        basic.pause(3)
+    }
+
     //% blockId="playAnimation" block="display effect %effect|color code %color|speed(1~30) %speed"
     //% weight=60 blockGap=5 blockInlineInputs=true speed.min=1 speed.max=30
     export function playAnimation(effect: effectType, color: number, speed: number): void {
@@ -263,21 +273,19 @@ namespace LumexEzRing {
     //% blockId="setDynaFunction" block="set the dynamic function code(1~20) %fCode"
     //% weight=30 blockGap=5 blockInlineInputs=true fCode.min=1 fCode.max=20
     export function setDynaFunction(fCode: number): void {
-        functionCode = fCode
-        serial.writeString("ATfd=(0)")
-        serial.readUntil("E")
-        basic.pause(3)
         if (fCode > 0) {
             serial.writeString("ATfd=(" + fCode + ")")
             serial.readUntil("E")
-            basic.pause(3)
+            basic.pause(5)
         }
     }
 
     //% blockId="setStopDyna" block="stop the dynamic function"
     //% weight=25 blockGap=5 blockInlineInputs=true
     export function setStopDyna(): void {
-        setDynaFunction(0)
+        serial.writeString("ATfd=(0)")
+        serial.readUntil("E")
+        basic.pause(5)
     }
 
     //% blockId="setDynaSpeed" block="set the dynamic function's speed(1~100) %speed"
@@ -296,4 +304,4 @@ namespace LumexEzRing {
         serial.readUntil("E")
         basic.pause(3)
     }
-}    
+}
