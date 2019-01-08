@@ -117,7 +117,7 @@ namespace LumexEzRing {
     function setDimmingLevel(level: number): void {
         serial.writeString("ATf2=(" + level + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     function setPixelNumber(pixels: number): void {
@@ -139,8 +139,8 @@ namespace LumexEzRing {
         basic.pause(20)
         setStopDyna()
         setPixelNumber(pixels)
-        clear()
         setDimmingLevel(31)
+        clear()
     }
 
     //% blockId="clear" block="clear display"
@@ -148,7 +148,7 @@ namespace LumexEzRing {
     export function clear(): void {
         serial.writeString("ATd0=()")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="getColor" block="get the color code| red(0~255) %red|green(0~255) %green|blue(0~255) %blue"
@@ -183,7 +183,7 @@ namespace LumexEzRing {
         let myColor = convertNumToArray(color)
         serial.writeString("ATc0=(" + addr + "," + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
         serial.readUntil("E")
-        basic.pause(5)
+        basic.pause(10)
     }
 
     //% blockId="setSectionColor" block="set the color code %color| from the pixel %addr0| to the pixel %addr1"
@@ -192,7 +192,7 @@ namespace LumexEzRing {
         let myColor = convertNumToArray(color)
         serial.writeString("ATc1=(" + addr0 + "," + addr1 + "," + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setRandomColor" block="set the color randomly for each pixel"
@@ -200,7 +200,7 @@ namespace LumexEzRing {
     export function setRandomColor(): void {
         serial.writeString("ATc2=()")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="loadPage" block="switch display designated page(0~7): %page"
@@ -208,7 +208,7 @@ namespace LumexEzRing {
     export function loadPage(page:number): void {
         serial.writeString("ATfc=("+page+")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="writeToPage" block="save display contents to current page"
@@ -216,7 +216,7 @@ namespace LumexEzRing {
     export function writeToPage(): void {
         serial.writeString("ATfe=()")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="playAnimation" block="display effect %effect|color code %color|speed(1~30) %speed"
@@ -225,7 +225,7 @@ namespace LumexEzRing {
         let myColor = convertNumToArray(color)
         serial.writeString("AT" + effect + "=(" + myColor[0] + "," + myColor[1] + "," + myColor[2] + "," + speed + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
 
@@ -234,7 +234,7 @@ namespace LumexEzRing {
     export function setClockMove(myClockMove: clockMove, speed: number): void {
         serial.writeString("AT" + convertNumToHexStr(myClockMove, 2) + "=(" + speed + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setPixelFlash" block="flash one single pixel %addr|speed(1~100) %speed"
@@ -242,7 +242,7 @@ namespace LumexEzRing {
     export function setPixelFlash(addr: number, speed: number): void {
         serial.writeString("ATc7=(" + addr + "," + speed + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setSectionFlash" block="flash the section pixels from the pixel %addr0| to the pixel %addr1|speed(1~100) %speed"
@@ -250,7 +250,7 @@ namespace LumexEzRing {
     export function setSectionFlash(addr0: number, addr1: number, speed: number): void {
         serial.writeString("ATc8=(" + addr0 + "," + addr1 + "," + speed + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setRingFlash" block="flash whole ring, speed(1~100) %speed"
@@ -258,7 +258,7 @@ namespace LumexEzRing {
     export function setRingFlash(speed: number): void {
         serial.writeString("ATc9=(" + speed + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setBreath" block="breath effect of whole ring red %red|green %green|blue %blue"
@@ -266,7 +266,7 @@ namespace LumexEzRing {
     export function setBreath(red: yesOrNo, green: yesOrNo, blue: yesOrNo): void {
         serial.writeString("ATca=(" + red + "," + green + "," + blue + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setDynaFunction" block="set the dynamic function code(1~20) %fCode"
@@ -275,7 +275,7 @@ namespace LumexEzRing {
         if (fCode > 0) {
             serial.writeString("ATfd=(" + fCode + ")")
             serial.readUntil("E")
-            basic.pause(5)
+            basic.pause(10)
         }
     }
 
@@ -284,7 +284,7 @@ namespace LumexEzRing {
     export function setStopDyna(): void {
         serial.writeString("ATfd=(0)")
         serial.readUntil("E")
-        basic.pause(5)
+        basic.pause(10)
     }
 
     //% blockId="setDynaSpeed" block="set the dynamic function's speed(1~100) %speed"
@@ -292,7 +292,7 @@ namespace LumexEzRing {
     export function setDynaSpeed(speed: number): void {
         serial.writeString("ATce=(" + speed + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 
     //% blockId="setDynaColor" block="set the dynamic function's color code %color"
@@ -301,6 +301,6 @@ namespace LumexEzRing {
         let myColor = convertNumToArray(color)
         serial.writeString("ATcd=(" + myColor[0] + "," + myColor[1] + "," + myColor[2] + ")")
         serial.readUntil("E")
-        basic.pause(3)
+        basic.pause(10)
     }
 }
