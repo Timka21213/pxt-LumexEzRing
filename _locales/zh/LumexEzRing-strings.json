@@ -25,8 +25,6 @@
     "LumexEzRing.colorCode.black|block":"黑色",
     "LumexEzRing.clockMove.type1|block":"順時針旋轉燈環燈光",
     "LumexEzRing.clockMove.type2|block":"逆時針旋轉燈環燈光",
-    "LumexEzRing.clockMove.type3|block":"順時針旋轉燈環燈光，接著逆時針旋轉",
-    "LumexEzRing.clockMove.type4|block":"逆時針旋轉燈環燈光，接著順時針旋轉",
     "LumexEzRing.setSerial|block":"設定燈環的RX連接到 %pinRX|TX連接到 %pinTX|連線速率 %br|燈環燈數 %pixels", 
     "LumexEzRing.clear|block":"清除所有燈光",
     "LumexEzRing.setRandomColor|block":"所有燈光顯示隨機顏色",
