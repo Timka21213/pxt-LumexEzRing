@@ -33,11 +33,7 @@ namespace LumexEzRing {
         //% block="turn the ring pixels clockwise one round"
         type1 = 0xc3,
         //% block="turn the ring pixels counterclockwise one round"
-        type2 = 0xc4,
-        //% block="turn the ring pixels clockwise then counterclockwise"
-        type3 = 0xc5,
-        //% block="turn the ring pixels counterclockwise then clockwise"
-        type4 = 0xc6
+        type2 = 0xc4
     }
 
     export enum colorCode {
